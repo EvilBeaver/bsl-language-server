@@ -36,6 +36,8 @@ public class CfgBuildingParseTreeVisitor extends BSLParserBaseVisitor<ParseTree>
   private ControlFlowGraph graph;
   private Map<String, LabelVertex> jumpLabels;
 
+  private boolean produceLoopIterationsEnabled = true;
+
   public ControlFlowGraph buildGraph(BSLParser.CodeBlockContext block) {
 
     blocks = new StatementsBlockWriter();
@@ -64,6 +66,10 @@ public class CfgBuildingParseTreeVisitor extends BSLParserBaseVisitor<ParseTree>
     }
 
     return graph;
+  }
+
+  public void produceLoopIterations(boolean flag) {
+    produceLoopIterationsEnabled = flag;
   }
 
   @Override
@@ -473,7 +479,8 @@ public class CfgBuildingParseTreeVisitor extends BSLParserBaseVisitor<ParseTree>
 
     graph.addEdge(loopStart, body.begin(), CfgEdgeType.TRUE_BRANCH);
     graph.addEdge(loopStart, blocks.getCurrentBlock().end(), CfgEdgeType.FALSE_BRANCH);
-    graph.addEdge(body.end(), loopStart, CfgEdgeType.LOOP_ITERATION);
+    if (produceLoopIterationsEnabled)
+      graph.addEdge(body.end(), loopStart, CfgEdgeType.LOOP_ITERATION);
   }
 
   private void connectGraphTail(StatementsBlockWriter.StatementsBlockRecord currentBlock, CfgVertex vertex) {
