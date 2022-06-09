@@ -18,7 +18,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("com.github.1c-syntax.bslls-dev-tools") version "0.4.0"
     id("io.freefair.aspectj.post-compile-weaving") version "6.0.0-m2"
-    id("io.freefair.maven-central.validate-poms") version "6.0.0-m2"
+    id("io.freefair.maven-central.validate-poms") version "6.4.3.1"
     id("ru.vyarus.pom") version "2.2.0"
 }
 
